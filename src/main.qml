@@ -5,18 +5,15 @@ import QtQuick.Dialogs 1.3
 import org.julialang 1.0
 
 ApplicationWindow {
-    id: root
-    title: "Hash Calculator"
+    title: qsTr("Hash Calculator")
     width: 840; height: 480
     minimumWidth: 840; minimumHeight: 480
     color: "#2a2e32"
     visible: true
-
     MouseArea {
         anchors.fill: parent
         onClicked: forceActiveFocus()
     }
-
     Column {
         width: parent.width*0.9; height: parent.height*0.9
         anchors.horizontalCenter: parent.horizontalCenter
@@ -137,13 +134,13 @@ ApplicationWindow {
             text: qsTr("Run")
             onClicked: {
                 if (textField.text == "") return
-                sha1.text = Julia.get_sha1(textField.text)
-                sha2_256.text = Julia.get_sha2_256(textField.text)
-                sha2_384.text = Julia.get_sha2_384(textField.text)
-                sha2_512.text = Julia.get_sha2_512(textField.text)
-                sha3_256.text = Julia.get_sha3_256(textField.text)
-                sha3_384.text = Julia.get_sha3_384(textField.text)
-                sha3_512.text = Julia.get_sha3_512(textField.text)
+                sha1.text = Julia.calcSha1(textField.text)
+                sha2_256.text = Julia.calcSha2_256(textField.text)
+                sha2_384.text = Julia.calcSha2_384(textField.text)
+                sha2_512.text = Julia.calcSha2_512(textField.text)
+                sha3_256.text = Julia.calcSha3_256(textField.text)
+                sha3_384.text = Julia.calcSha3_384(textField.text)
+                sha3_512.text = Julia.calcSha3_512(textField.text)
             }
         }
     }
@@ -151,15 +148,6 @@ ApplicationWindow {
         id: fileDialog
         title: "Open File"
         folder: shortcuts.home
-        onAccepted: {
-            var path = ""
-            for(var i in fileDialog.fileUrls){
-                path += Qt.resolvedUrl(fileDialog.fileUrls[i])
-            }
-            textField.text = path
-        }
-        onRejected: {
-            console.log("Canceled")
-        }
+        onAccepted: textField.text = fileDialog.fileUrl
     }
 }

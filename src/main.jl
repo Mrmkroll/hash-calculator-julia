@@ -2,47 +2,56 @@ using QML
 using Qt5QuickControls_jll
 using SHA
 
+function main()
+    if isfile("main.qml")
+        loadqml("main.qml")
+        exec()
+    elseif isfile("src/main.qml")
+        loadqml("src/main.qml")
+        exec()
+    end
+end
+
 function openFile(path)
     path = replace(path, "file://" => "")
     return open(path)
 end
 
-function get_sha1(path)
-    file = openFile(path)
-    return uppercase(bytes2hex(sha1(file)))
+function calcSha1(path)
+    hash = sha1(openFile(path))
+    return uppercase(bytes2hex(hash))
 end
 
-function get_sha2_256(path)
-    file = openFile(path)
-    return uppercase(bytes2hex(sha2_256(file)))
+function calcSha2_256(path)
+    hash = sha2_256(openFile(path))
+    return uppercase(bytes2hex(hash))
 end
 
-function get_sha2_384(path)
-    file = openFile(path)
-    return uppercase(bytes2hex(sha2_384(file)))
+function calcSha2_384(path)
+    hash = sha2_384(openFile(path))
+    return uppercase(bytes2hex(hash))
 end
 
-function get_sha2_512(path)
-    file = openFile(path)
-    return uppercase(bytes2hex(sha2_512(file)))
+function calcSha2_512(path)
+    hash = sha2_512(openFile(path))
+    return uppercase(bytes2hex(hash))
 end
 
-function get_sha3_256(path)
-    file = openFile(path)
-    return uppercase(bytes2hex(sha3_256(file)))
+function calcSha3_256(path)
+    hash = sha3_256(openFile(path))
+    return uppercase(bytes2hex(hash))
 end
 
-function get_sha3_384(path)
-    file = openFile(path)
-    return uppercase(bytes2hex(sha3_384(file)))
+function calcSha3_384(path)
+    hash = sha3_384(openFile(path))
+    return uppercase(bytes2hex(hash))
 end
 
-function get_sha3_512(path)
-    file = openFile(path)
-    return uppercase(bytes2hex(sha3_512(file)))
+function calcSha3_512(path)
+    hash = sha3_512(openFile(path))
+    return uppercase(bytes2hex(hash))
 end
 
-@qmlfunction get_sha1 get_sha2_256 get_sha2_384 get_sha2_512 get_sha3_256 get_sha3_384 get_sha3_512
+@qmlfunction calcSha1 calcSha2_256 calcSha2_384 calcSha2_512 calcSha3_256 calcSha3_384 calcSha3_512
 
-loadqml("main.qml")
-exec()
+main()
